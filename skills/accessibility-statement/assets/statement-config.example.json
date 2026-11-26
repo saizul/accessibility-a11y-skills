@@ -1,0 +1,46 @@
+{
+  "organization": "Example Ltd",
+  "site_name": "Example shop",
+  "site_url": "https://www.example.com",
+  "standard": "WCAG 2.2",
+  "level": "AA",
+  "conformance": "partial",
+  "statement_date": "2026-11-01",
+  "last_reviewed": "2026-11-01",
+  "assessment": {
+    "method": "self-evaluation",
+    "details": "Automated checks, keyboard-only testing and screen reader testing with NVDA + Firefox and VoiceOver + Safari on the 12 most used page templates."
+  },
+  "contact": {
+    "email": "accessibility@example.com",
+    "phone": "",
+    "form_url": "https://www.example.com/accessibility-feedback",
+    "response_days": 5
+  },
+  "technologies": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "WAI-ARIA"
+  ],
+  "compatible_with": [
+    "recent versions of Chrome, Firefox, Safari and Edge",
+    "NVDA and JAWS on Windows, VoiceOver on macOS and iOS, TalkBack on Android"
+  ],
+  "known_issues": [
+    {
+      "title": "Product image carousel cannot be paused",
+      "wcag": "2.2.2",
+      "impact": "Moving content distracts some users and screen readers re-announce slides.",
+      "workaround": "All product images are also listed on the product details tab.",
+      "fix_by": "2027-01-31"
+    }
+  ],
+  "exemptions": [
+    {
+      "title": "Archived PDF newsletters published before 2024",
+      "reason": "Archived content not needed for current services; accessible versions on request."
+    }
+  ],
+  "enforcement": ""
+}

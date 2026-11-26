@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Focus problems</title>
+<style>
+  *:focus { outline: none; }
+  .header { position: fixed; top: 0; }
+</style>
+</head>
+<body>
+<div class="header">
+  <a href="/">Home</a>
+  <a href="/shop">Shop</a>
+  <a href="/sale">Sale</a>
+  <a href="/blog">Blog</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <a href="#content">Skip to content</a>
+</div>
+<main>
+  <h1>Shop</h1>
+  <div class="card" onclick="openProduct(1)">Product one</div>
+  <div class="card" tabindex="0" @click="openProduct(2)">Product two</div>
+  <span role="button" tabindex="0" onclick="buy()">Buy</span>
+  <a href="/terms" tabindex="-1">Terms</a>
+  <input type="text" aria-label="Coupon" autofocus>
+  <button tabindex="5">Apply</button>
+  <div onmouseover="showTip()">Hover for help</div>
+  <li ondblclick="edit()">Double-click to edit</li>
+  <button style="outline: none; width: 16px; height: 16px" aria-label="Close">x</button>
+  <a href="/help" accesskey="h">Help</a>
+  <div role="dialog" aria-label="Newsletter">Sign up</div>
+</main>
+</body>
+</html>

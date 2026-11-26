@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabs pattern</title>
+  <style>
+    [role="tablist"] { display: flex; gap: 0.25rem; border-bottom: 2px solid #1a1a1a; }
+    [role="tab"] { padding: 0.75rem 1rem; border: 2px solid transparent; background: none; font: inherit; }
+    [role="tab"][aria-selected="true"] { border-color: #1a1a1a #1a1a1a #fff; font-weight: 700; }
+    :focus-visible { outline: 3px solid #1a4fd6; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main id="main">
+    <h1>Tabs</h1>
+    <h2 id="settings-title">Account settings</h2>
+    <div class="tabs">
+      <div role="tablist" aria-labelledby="settings-title">
+        <button type="button" role="tab" id="tab-profile" aria-selected="true" aria-controls="panel-profile">Profile</button>
+        <button type="button" role="tab" id="tab-security" aria-selected="false" aria-controls="panel-security" tabindex="-1">Security</button>
+        <button type="button" role="tab" id="tab-billing" aria-selected="false" aria-controls="panel-billing" tabindex="-1">Billing</button>
+      </div>
+      <div role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabindex="0">
+        <p>Your name and photo.</p>
+      </div>
+      <div role="tabpanel" id="panel-security" aria-labelledby="tab-security" tabindex="0" hidden>
+        <p>Password and passkeys.</p>
+      </div>
+      <div role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" tabindex="0" hidden>
+        <p>Invoices and payment methods.</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Automatic activation: arrow keys move focus and select. One Tab stop for the tablist.
+    document.querySelectorAll('[role="tablist"]').forEach((tablist) => {
+      const tabs = [...tablist.querySelectorAll('[role="tab"]')];
+
+      function select(tab, moveFocus = true) {
+        tabs.forEach((t) => {
+          const selected = t === tab;
+          t.setAttribute("aria-selected", String(selected));
+          t.tabIndex = selected ? 0 : -1;
+          document.getElementById(t.getAttribute("aria-controls")).hidden = !selected;
+        });
+        if (moveFocus) tab.focus();
+      }
+
+      tablist.addEventListener("click", (e) => {
+        const tab = e.target.closest('[role="tab"]');
+        if (tab) select(tab);
+      });
+
+      tablist.addEventListener("keydown", (e) => {
+        const i = tabs.indexOf(document.activeElement);
+        if (i < 0) return;
+        const target = {
+          ArrowRight: tabs[(i + 1) % tabs.length],
+          ArrowLeft: tabs[(i - 1 + tabs.length) % tabs.length],
+          Home: tabs[0],
+          End: tabs[tabs.length - 1],
+        }[e.key];
+        if (!target) return;
+        e.preventDefault();
+        select(target);
+      });
+    });
+  </script>
+</body>
+</html>

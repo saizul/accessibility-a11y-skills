@@ -1,0 +1,277 @@
+{
+  "tool": "wcag-html-audit",
+  "files": [
+    {
+      "file": "tests/fixtures/html/bad_page.html",
+      "summary": {
+        "high": 19,
+        "medium": 7,
+        "low": 2,
+        "info": 1
+      },
+      "findings": [
+        {
+          "severity": "high",
+          "rule": "html.lang_missing",
+          "wcag": "3.1.1",
+          "line": 1,
+          "element": "html",
+          "message": "<html> has no lang attribute; screen readers guess the pronunciation",
+          "fix": "add lang=\"en\" (or the page language) to <html>"
+        },
+        {
+          "severity": "high",
+          "rule": "document.title_missing",
+          "wcag": "2.4.2",
+          "line": 1,
+          "element": "html",
+          "message": "the page has no (or an empty) <title>",
+          "fix": "add a unique, descriptive <title>: 'Page topic - Site name'"
+        },
+        {
+          "severity": "high",
+          "rule": "meta.viewport_zoom_blocked",
+          "wcag": "1.4.4",
+          "line": 3,
+          "element": "meta",
+          "message": "viewport blocks zoom (width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no)",
+          "fix": "remove user-scalable=no and maximum-scale (or set maximum-scale>=5)"
+        },
+        {
+          "severity": "high",
+          "rule": "meta.refresh",
+          "wcag": "2.2.1",
+          "line": 4,
+          "element": "meta",
+          "message": "page refreshes or redirects after 30s",
+          "fix": "use a server-side redirect, or let the user extend/stop the timer"
+        },
+        {
+          "severity": "high",
+          "rule": "img.alt_missing",
+          "wcag": "1.1.1",
+          "line": 8,
+          "element": "img",
+          "message": "<img src='/logo.png'> has no alt attribute",
+          "fix": "describe the image in alt=\"...\", or alt=\"\" if it is purely decorative"
+        },
+        {
+          "severity": "medium",
+          "rule": "img.alt_placeholder",
+          "wcag": "1.1.1",
+          "line": 16,
+          "element": "img",
+          "message": "alt='IMG_2041.jpg' looks like a file name or placeholder",
+          "fix": "write what the image shows or does; use alt='' if decorative"
+        },
+        {
+          "severity": "medium",
+          "rule": "img.alt_placeholder",
+          "wcag": "1.1.1",
+          "line": 17,
+          "element": "img",
+          "message": "alt='image' looks like a file name or placeholder",
+          "fix": "write what the image shows or does; use alt='' if decorative"
+        },
+        {
+          "severity": "high",
+          "rule": "input_image.alt_missing",
+          "wcag": "1.1.1",
+          "line": 23,
+          "element": "input",
+          "message": "<input type=\"image\"> has no alt",
+          "fix": "add alt describing the action, e.g. alt='Search'"
+        },
+        {
+          "severity": "high",
+          "rule": "svg.name_missing",
+          "wcag": "1.1.1",
+          "line": 36,
+          "element": "svg",
+          "message": "<svg role=\"img\"> has no accessible name",
+          "fix": "add <title> as first child or aria-label; use aria-hidden=\"true\" if decorative"
+        },
+        {
+          "severity": "high",
+          "rule": "link.empty",
+          "wcag": "2.4.4, 4.1.2",
+          "line": 8,
+          "element": "a",
+          "message": "link to '/' has no accessible name",
+          "fix": "add link text, alt text on the image inside it, or aria-label"
+        },
+        {
+          "severity": "high",
+          "rule": "link.empty",
+          "wcag": "2.4.4, 4.1.2",
+          "line": 9,
+          "element": "a",
+          "message": "link to '/cart' has no accessible name",
+          "fix": "add link text, alt text on the image inside it, or aria-label"
+        },
+        {
+          "severity": "high",
+          "rule": "button.empty",
+          "wcag": "4.1.2",
+          "line": 10,
+          "element": "button.menu",
+          "message": "button has no accessible name (icon-only?)",
+          "fix": "add visible text, aria-label, or visually hidden text inside the button"
+        },
+        {
+          "severity": "low",
+          "rule": "link.generic_text",
+          "wcag": "2.4.4",
+          "line": 11,
+          "element": "a",
+          "message": "link text 'Click here' does not say where it goes",
+          "fix": "make the text describe the target ('Read more about pricing') or add visually hidden text"
+        },
+        {
+          "severity": "info",
+          "rule": "link.new_window",
+          "wcag": "3.2.5",
+          "line": 11,
+          "element": "a",
+          "message": "link opens a new window without saying so",
+          "fix": "add '(opens in a new tab)' to the text or a visually hidden span"
+        },
+        {
+          "severity": "high",
+          "rule": "form.label_missing",
+          "wcag": "1.3.1, 4.1.2",
+          "line": 19,
+          "element": "input",
+          "message": "<input type=text> has no label (placeholder is not a label)",
+          "fix": "add <label for='id'>, wrap it in <label>, or use aria-labelledby pointing at visible text"
+        },
+        {
+          "severity": "high",
+          "rule": "form.label_missing",
+          "wcag": "1.3.1, 4.1.2",
+          "line": 20,
+          "element": "input#phone",
+          "message": "<input type=text> has no label",
+          "fix": "add <label for='id'>, wrap it in <label>, or use aria-labelledby pointing at visible text"
+        },
+        {
+          "severity": "high",
+          "rule": "form.label_missing",
+          "wcag": "1.3.1, 4.1.2",
+          "line": 22,
+          "element": "select",
+          "message": "<select> has no label",
+          "fix": "add <label for='id'>, wrap it in <label>, or use aria-labelledby pointing at visible text"
+        },
+        {
+          "severity": "medium",
+          "rule": "label.for_missing_target",
+          "wcag": "1.3.1",
+          "line": 21,
+          "element": "label",
+          "message": "<label for='nowhere'> points at no element",
+          "fix": "make for= match the control's id"
+        },
+        {
+          "severity": "medium",
+          "rule": "heading.skipped_level",
+          "wcag": "1.3.1",
+          "line": 14,
+          "element": "h4",
+          "message": "heading level jumps from h1 to h4",
+          "fix": "use h2 here (style it with CSS if it must look smaller)"
+        },
+        {
+          "severity": "high",
+          "rule": "heading.empty",
+          "wcag": "1.3.1, 2.4.6",
+          "line": 15,
+          "element": "h2",
+          "message": "empty <h2>",
+          "fix": "remove it or give it text; do not use headings for spacing"
+        },
+        {
+          "severity": "medium",
+          "rule": "id.duplicate",
+          "wcag": "1.3.1, 4.1.2",
+          "line": 26,
+          "element": "div#dup",
+          "message": "id 'dup' is used 2 times (lines 25, 26)",
+          "fix": "make ids unique; labels and ARIA references pick the first one only"
+        },
+        {
+          "severity": "medium",
+          "rule": "tabindex.positive",
+          "wcag": "2.4.3",
+          "line": 27,
+          "element": "a",
+          "message": "tabindex=3 changes the natural focus order",
+          "fix": "use tabindex=\"0\" (or none) and fix the DOM order instead"
+        },
+        {
+          "severity": "high",
+          "rule": "iframe.title_missing",
+          "wcag": "4.1.2",
+          "line": 28,
+          "element": "iframe",
+          "message": "<iframe src='https://video.example.com/embed/1'> has no title",
+          "fix": "add title describing the content, e.g. title='Map of our office'"
+        },
+        {
+          "severity": "high",
+          "rule": "table.no_headers",
+          "wcag": "1.3.1",
+          "line": 29,
+          "element": "table",
+          "message": "data table (2 rows) has no <th> header cells",
+          "fix": "mark header cells as <th scope=\"col\"> / <th scope=\"row\">, or role=\"presentation\" for layout tables"
+        },
+        {
+          "severity": "high",
+          "rule": "media.autoplay_sound",
+          "wcag": "1.4.2",
+          "line": 33,
+          "element": "video",
+          "message": "<video autoplay> plays sound automatically",
+          "fix": "remove autoplay, or add muted; provide a pause/stop and volume control"
+        },
+        {
+          "severity": "medium",
+          "rule": "media.no_captions",
+          "wcag": "1.2.2",
+          "line": 33,
+          "element": "video",
+          "message": "<video> has no captions <track>",
+          "fix": "add <track kind=\"captions\" src=\"...\" srclang=\"en\" label=\"English\"> (skip if the video has no speech)"
+        },
+        {
+          "severity": "high",
+          "rule": "media.autoplay_sound",
+          "wcag": "1.4.2",
+          "line": 34,
+          "element": "audio",
+          "message": "<audio autoplay> plays sound automatically",
+          "fix": "remove autoplay, or add muted; provide a pause/stop and volume control"
+        },
+        {
+          "severity": "high",
+          "rule": "element.moving_content",
+          "wcag": "2.2.2",
+          "line": 35,
+          "element": "marquee",
+          "message": "<marquee> moves or blinks with no way to stop it",
+          "fix": "remove it; use static text"
+        },
+        {
+          "severity": "low",
+          "rule": "landmark.main_missing",
+          "wcag": "1.3.1, 2.4.1",
+          "line": 0,
+          "element": "",
+          "message": "page has no <main> landmark",
+          "fix": "wrap the primary content in <main> (one per page)"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modal dialog pattern</title>
+  <style>
+    dialog { max-width: 32rem; border: 2px solid #1a1a1a; border-radius: 0.5rem; padding: 1.5rem; }
+    dialog::backdrop { background: rgb(0 0 0 / 60%); }
+    :focus-visible { outline: 3px solid #1a4fd6; outline-offset: 2px; }
+    .dialog-close { float: right; min-width: 44px; min-height: 44px; }
+  </style>
+</head>
+<body>
+  <main id="main">
+    <h1>Modal dialog</h1>
+    <p>Native <code>&lt;dialog&gt;</code> with <code>showModal()</code>: focus moves in, the page behind
+      is inert, Escape closes, and focus returns to the button that opened it.</p>
+
+    <button type="button" class="dialog-open" data-dialog="delete-dialog">Delete project</button>
+
+    <dialog id="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-desc">
+      <button type="button" class="dialog-close" aria-label="Close" data-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h2 id="delete-title">Delete project?</h2>
+      <p id="delete-desc">This removes the project and its 12 files for everyone. You cannot undo this.</p>
+      <form method="dialog">
+        <button type="submit" value="cancel" autofocus>Cancel</button>
+        <button type="submit" value="delete">Delete project</button>
+      </form>
+    </dialog>
+
+    <div id="dialog-status" role="status" aria-live="polite"></div>
+  </main>
+
+  <script>
+    // Open: remember the opener so focus can go back to it.
+    document.querySelectorAll(".dialog-open").forEach((opener) => {
+      const dialog = document.getElementById(opener.dataset.dialog);
+      opener.addEventListener("click", () => {
+        dialog.showModal(); // modal: Escape closes, outside content is inert
+      });
+      dialog.addEventListener("close", () => {
+        opener.focus(); // most browsers do this already; be explicit
+        if (dialog.returnValue === "delete") {
+          document.getElementById("dialog-status").textContent = "Project deleted.";
+        }
+      });
+      dialog.querySelectorAll("[data-close]").forEach((btn) =>
+        btn.addEventListener("click", () => dialog.close("cancel"))
+      );
+      // Optional: click on the backdrop closes the dialog.
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) dialog.close("cancel");
+      });
+    });
+  </script>
+</body>
+</html>

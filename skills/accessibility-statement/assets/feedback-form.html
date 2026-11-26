@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Report an accessibility problem - Example Shop</title>
+  <style>
+    body { font: 1.125rem/1.5 system-ui, sans-serif; max-width: 40rem; margin: 0 auto; padding: 1rem; color: #1a1a1a; }
+    label, legend { display: block; font-weight: 700; margin-top: 1.25rem; }
+    .hint { color: #4a4a4a; margin: 0.25rem 0; }
+    input, textarea, select { font: inherit; padding: 0.5rem; border: 2px solid #4a4a4a; width: 100%; box-sizing: border-box; }
+    input[type="radio"] { width: auto; }
+    button { font: inherit; margin-top: 1.5rem; padding: 0.75rem 1.25rem; background: #1a4fd6; color: #fff; border: 0; }
+    :focus-visible { outline: 3px solid #1a4fd6; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main id="main">
+    <h1>Report an accessibility problem</h1>
+    <p>Tell us about anything on our site that is hard to use. We reply within 5 working days.
+      You can also email <a href="mailto:accessibility@example.com">accessibility@example.com</a>.</p>
+    <form action="/accessibility-feedback" method="post">
+      <label for="fb-page">Page or feature</label>
+      <p class="hint" id="fb-page-hint">The web address or the name of the page.</p>
+      <input id="fb-page" name="page" type="text" aria-describedby="fb-page-hint" required>
+
+      <label for="fb-problem">What went wrong?</label>
+      <textarea id="fb-problem" name="problem" rows="6" required></textarea>
+
+      <fieldset>
+        <legend>How much does it affect you?</legend>
+        <input type="radio" id="fb-impact-1" name="impact" value="blocked">
+        <label for="fb-impact-1">I cannot complete the task</label>
+        <input type="radio" id="fb-impact-2" name="impact" value="difficult">
+        <label for="fb-impact-2">I can complete it with difficulty</label>
+        <input type="radio" id="fb-impact-3" name="impact" value="minor">
+        <label for="fb-impact-3">It is annoying but I can work around it</label>
+      </fieldset>
+
+      <label for="fb-at">Assistive technology or settings you use (optional)</label>
+      <input id="fb-at" name="assistive_technology" type="text">
+
+      <label for="fb-name">Your name (optional)</label>
+      <input id="fb-name" name="name" type="text" autocomplete="name">
+
+      <label for="fb-email">Email address, if you want a reply (optional)</label>
+      <input id="fb-email" name="email" type="email" autocomplete="email">
+
+      <button type="submit">Send report</button>
+    </form>
+  </main>
+</body>
+</html>

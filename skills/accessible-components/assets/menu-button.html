@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu button pattern</title>
+  <style>
+    .menu-wrap { position: relative; display: inline-block; }
+    [role="menu"] { position: absolute; margin: 0; padding: 0.25rem; list-style: none; background: #fff; border: 2px solid #1a1a1a; min-width: 12rem; }
+    [role="menuitem"] { padding: 0.5rem 0.75rem; cursor: pointer; }
+    [role="menuitem"]:focus { background: #1a4fd6; color: #fff; outline: 2px solid transparent; }
+    :focus-visible { outline: 3px solid #1a4fd6; outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main id="main">
+    <h1>Menu button</h1>
+    <p>For a list of <strong>actions</strong> (like a desktop application menu). For site navigation
+      links use a disclosure button with a plain list of links instead (see references/disclosure.md).</p>
+
+    <div class="menu-wrap">
+      <button type="button" id="actions-button" aria-haspopup="true" aria-expanded="false" aria-controls="actions-menu">
+        Actions <span aria-hidden="true">&#9662;</span>
+      </button>
+      <ul role="menu" id="actions-menu" aria-labelledby="actions-button" hidden>
+        <li role="menuitem" tabindex="-1" data-action="rename">Rename</li>
+        <li role="menuitem" tabindex="-1" data-action="duplicate">Duplicate</li>
+        <li role="menuitem" tabindex="-1" data-action="archive">Archive</li>
+      </ul>
+    </div>
+    <p id="menu-status" role="status"></p>
+  </main>
+
+  <script>
+    const button = document.getElementById("actions-button");
+    const menu = document.getElementById("actions-menu");
+    const items = [...menu.querySelectorAll('[role="menuitem"]')];
+
+    function open(focusIndex = 0) {
+      menu.hidden = false;
+      button.setAttribute("aria-expanded", "true");
+      items[(focusIndex + items.length) % items.length].focus();
+    }
+    function close(returnFocus = true) {
+      menu.hidden = true;
+      button.setAttribute("aria-expanded", "false");
+      if (returnFocus) button.focus();
+    }
+    function activate(item) {
+      document.getElementById("menu-status").textContent = `${item.textContent} selected`;
+      close();
+    }
+
+    button.addEventListener("click", () => (menu.hidden ? open(0) : close()));
+    button.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") { e.preventDefault(); open(0); }
+      if (e.key === "ArrowUp") { e.preventDefault(); open(-1); }
+    });
+
+    menu.addEventListener("keydown", (e) => {
+      const i = items.indexOf(document.activeElement);
+      const moves = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: items.length - 1 };
+      if (e.key in moves) {
+        e.preventDefault();
+        items[(moves[e.key] + items.length) % items.length].focus();
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+      } else if (e.key === "Tab") {
+        close(false); // let focus continue to the next element
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        activate(items[i]);
+      } else if (e.key.length === 1) {
+        // type-ahead: jump to the next item starting with the typed character
+        const start = (i + 1) % items.length;
+        const order = [...items.slice(start), ...items.slice(0, start)];
+        const match = order.find((it) => it.textContent.trim().toLowerCase().startsWith(e.key.toLowerCase()));
+        if (match) match.focus();
+      }
+    });
+    menu.addEventListener("click", (e) => {
+      const item = e.target.closest('[role="menuitem"]');
+      if (item) activate(item);
+    });
+    document.addEventListener("click", (e) => {
+      if (!menu.hidden && !e.target.closest(".menu-wrap")) close(false);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# fg, bg, label
+#767676, #ffffff, body text minimum grey
+#777777, #ffffff, just below AA
+rgb(255 255 255), hsl(220 78% 47%), button text
+white, orange, warning badge

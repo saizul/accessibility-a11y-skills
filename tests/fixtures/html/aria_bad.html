@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>ARIA problems</title></head>
+<body>
+<nav><a href="/">Home</a></nav>
+<nav><a href="/help">Help</a></nav>
+<main role="main">
+  <h1>Settings</h1>
+  <button role="button">Save</button>
+  <div role="buton" tabindex="0">Typo role</div>
+  <div role="widget">Abstract</div>
+  <div role="checkbox" tabindex="0">Remember me</div>
+  <div role="button">Not focusable</div>
+  <span aria-labeledby="x">Misspelled attribute</span>
+  <button aria-expanded="yes">Menu</button>
+  <input aria-describedby="missing-hint" aria-label="Name">
+  <div aria-hidden="true"><a href="/secret">Hidden but focusable</a></div>
+  <div role="tab" tabindex="0">Orphan tab</div>
+  <div role="dialog">Unnamed dialog</div>
+  <div aria-label="Card">Generic with label</div>
+  <a href="/x" role="presentation">Presentational link</a>
+  <h2 role="link">Heading as link</h2>
+  <div role="slider" tabindex="0">Volume</div>
+  <ul role="list"><li role="listitem">Item</li></ul>
+  <span aria-level="two" role="heading">Bad level</span>
+</main>
+</body>
+</html>

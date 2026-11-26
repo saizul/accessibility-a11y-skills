@@ -1,0 +1,38 @@
+{
+  "name": "accessibility-a11y-skills",
+  "description": "Agent Skills for making websites and web apps accessible (WCAG 2.2 AA).",
+  "owner": {
+    "name": "Saizul Amin",
+    "url": "https://github.com/saizul"
+  },
+  "plugins": [
+    {
+      "name": "accessibility-a11y-skills",
+      "source": "./",
+      "description": "WCAG 2.2 AA audits of HTML, colour contrast, ARIA lint, keyboard and focus, accessible forms and autocomplete, accessible components (dialog, tabs, menu, combobox), screen reader test plans and accessibility statements.",
+      "category": "accessibility",
+      "tags": [
+        "accessibility",
+        "a11y",
+        "wcag",
+        "wcag22",
+        "aria",
+        "screen-reader",
+        "color-contrast",
+        "keyboard",
+        "forms",
+        "inclusive-design"
+      ],
+      "skills": [
+        "./skills/wcag-html-audit",
+        "./skills/color-contrast-checker",
+        "./skills/aria-review",
+        "./skills/keyboard-and-focus",
+        "./skills/accessible-forms",
+        "./skills/accessible-components",
+        "./skills/screen-reader-testing",
+        "./skills/accessibility-statement"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+name: Bug report
+description: A script crashed, reported a wrong finding (false positive or missed problem), or a skill gave wrong advice
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please reduce the page to the few elements that reproduce the problem and remove private URLs and personal data.
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Skill
+      options:
+        - wcag-html-audit
+        - color-contrast-checker
+        - aria-review
+        - keyboard-and-focus
+        - accessible-forms
+        - accessible-components
+        - screen-reader-testing
+        - accessibility-statement
+        - validator / repository tooling
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: The command you ran, its output, and a minimal HTML/CSS snippet.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+      description: For accessibility behaviour, cite the WCAG criterion, ARIA spec section or APG pattern if you can.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "Python 3.12, macOS 15, Claude Code / Codex CLI; screen reader + browser if relevant"
+    validations:
+      required: true

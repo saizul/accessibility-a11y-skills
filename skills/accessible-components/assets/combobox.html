@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Combobox pattern</title>
+  <style>
+    .combo { position: relative; max-width: 20rem; }
+    .combo input { width: 100%; padding: 0.5rem; border: 2px solid #1a1a1a; font: inherit; }
+    [role="listbox"] { position: absolute; left: 0; right: 0; margin: 0; padding: 0; list-style: none; background: #fff; border: 2px solid #1a1a1a; max-height: 14rem; overflow-y: auto; }
+    [role="option"] { padding: 0.5rem; cursor: pointer; }
+    [role="option"][aria-selected="true"] { background: #1a4fd6; color: #fff; }
+    :focus-visible { outline: 3px solid #1a4fd6; outline-offset: 2px; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  </style>
+</head>
+<body>
+  <main id="main">
+    <h1>Combobox (autocomplete list)</h1>
+    <p>Editable combobox with list autocomplete. Focus stays in the input; the highlighted option is
+      exposed with <code>aria-activedescendant</code>. Prefer a native <code>&lt;select&gt;</code> or
+      <code>&lt;input list&gt;</code> with <code>&lt;datalist&gt;</code> when they are enough.</p>
+
+    <label for="assignee">Assign to</label>
+    <p id="assignee-hint">Type a name, then use the arrow keys to choose.</p>
+    <div class="combo">
+      <input id="assignee" name="assignee" type="text" role="combobox" autocomplete="off"
+             aria-autocomplete="list" aria-expanded="false" aria-controls="assignee-list"
+             aria-describedby="assignee-hint">
+      <ul id="assignee-list" role="listbox" aria-label="People" hidden>
+        <li role="option" id="person-1">Amina Rahman</li>
+        <li role="option" id="person-2">Arif Hossain</li>
+        <li role="option" id="person-3">Farhana Akter</li>
+        <li role="option" id="person-4">Nusrat Jahan</li>
+        <li role="option" id="person-5">Tanvir Ahmed</li>
+      </ul>
+    </div>
+    <div id="assignee-status" class="visually-hidden" role="status" aria-live="polite"></div>
+  </main>
+
+  <script>
+    const input = document.getElementById("assignee");
+    const list = document.getElementById("assignee-list");
+    const status = document.getElementById("assignee-status");
+    const all = [...list.querySelectorAll('[role="option"]')];
+    let visible = [];
+    let active = -1;
+
+    function render() {
+      const q = input.value.trim().toLowerCase();
+      visible = all.filter((o) => o.textContent.toLowerCase().includes(q));
+      all.forEach((o) => { o.hidden = !visible.includes(o); o.setAttribute("aria-selected", "false"); });
+      setActive(-1);
+      const show = q.length > 0 && visible.length > 0;
+      list.hidden = !show;
+      input.setAttribute("aria-expanded", String(show));
+      // Debounced count announcement for screen reader users
+      clearTimeout(render.timer);
+      render.timer = setTimeout(() => {
+        status.textContent = q ? `${visible.length} result${visible.length === 1 ? "" : "s"} available` : "";
+      }, 400);
+    }
+    function setActive(i) {
+      if (active >= 0 && visible[active]) visible[active].setAttribute("aria-selected", "false");
+      active = i;
+      if (i >= 0 && visible[i]) {
+        visible[i].setAttribute("aria-selected", "true");
+        input.setAttribute("aria-activedescendant", visible[i].id);
+        visible[i].scrollIntoView({ block: "nearest" });
+      } else {
+        input.removeAttribute("aria-activedescendant");
+      }
+    }
+    function choose(option) {
+      input.value = option.textContent;
+      close();
+    }
+    function close() {
+      list.hidden = true;
+      input.setAttribute("aria-expanded", "false");
+      setActive(-1);
+    }
+
+    input.addEventListener("input", render);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (list.hidden) render();
+        if (visible.length) setActive((active + 1) % visible.length);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (visible.length) setActive((active - 1 + visible.length) % visible.length);
+      } else if (e.key === "Enter" && active >= 0) {
+        e.preventDefault();
+        choose(visible[active]);
+      } else if (e.key === "Escape") {
+        if (!list.hidden) { e.preventDefault(); close(); } else { input.value = ""; }
+      }
+    });
+    input.addEventListener("blur", () => setTimeout(close, 150));
+    list.addEventListener("mousedown", (e) => e.preventDefault()); // keep focus in the input
+    list.addEventListener("click", (e) => {
+      const option = e.target.closest('[role="option"]');
+      if (option) choose(option);
+    });
+  </script>
+</body>
+</html>

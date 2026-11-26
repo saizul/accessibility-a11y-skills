@@ -1,0 +1,16 @@
+/* Bad: global outline removal */
+a:focus,
+button:focus {
+  outline: 0;
+}
+
+@media (min-width: 40em) {
+  .nav-link:focus {
+    outline: none !important;
+  }
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px #1a4fd6;
+}

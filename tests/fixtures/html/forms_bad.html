@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Checkout</title></head>
+<body>
+<main>
+<h1>Checkout</h1>
+<form action="/pay" method="post">
+  <label for="fname">First name *</label>
+  <input id="fname" name="first_name">
+  <label for="lname">Last name</label>
+  <input id="lname" name="lastName" autocomplete="surname">
+  <label for="em">Email</label>
+  <input id="em" name="email" type="text" autocomplete="email">
+  <label for="zip">Postcode</label>
+  <input id="zip" name="zip" autocomplete="off">
+  <label for="ship">Shipping street</label>
+  <input id="ship" name="street" autocomplete="shipping mobile street-address">
+  <label for="tel">Mobile</label>
+  <input id="tel" name="mobile" type="tel" autocomplete="work tel">
+  <label for="pw">Password</label>
+  <input id="pw" type="password" name="password" onpaste="return false" autocomplete="current-password">
+  <input name="coupon" placeholder="Coupon code">
+  <label for="cc">Card number</label>
+  <input id="cc" name="cardnumber" aria-invalid="true" autocomplete="cc-number">
+  <label for="search-btn">Search</label>
+  <button id="search-btn" type="button" aria-label="Find">Search</button>
+  <label for="nick">Nickname</label>
+  <input id="nick" name="nick" aria-label="Alias">
+  <p>Delivery speed</p>
+  <input type="radio" id="std" name="speed" value="std"><label for="std">Standard</label>
+  <input type="radio" id="exp" name="speed" value="exp"><label for="exp">Express</label>
+  <div class="g-recaptcha" data-sitekey="demo"></div>
+</form>
+</main>
+</body>
+</html>

@@ -1,0 +1,41 @@
+:root {
+  --brand: #1a4fd6;
+  --muted: #9a9a9a;
+  --surface: #ffffff;
+}
+
+body {
+  background-color: var(--surface);
+  color: #222;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.btn-primary {
+  color: #fff;
+  background: var(--brand);
+  font-weight: 700;
+}
+
+.hero-title {
+  color: #8a8a8a;
+  font-size: 32px;
+}
+
+.banner {
+  color: white;
+  background: linear-gradient(#000, #333);
+}
+
+.ghost {
+  color: rgba(0, 0, 0, 0.4);
+  background-color: #fff;
+}
+
+.badge {
+  color: #ffffff;
+  background-color: #f59e0b;
+  font-size: 14px;
+}

@@ -1,0 +1,25 @@
+{
+  "name": "accessibility-a11y-skills",
+  "displayName": "Accessibility (a11y) Skills",
+  "version": "0.1.0",
+  "description": "Agent Skills for WCAG 2.2 AA accessibility: HTML audit, colour contrast, ARIA review, keyboard and focus, accessible forms, accessible components, screen reader testing and accessibility statements, with tested offline Python scripts.",
+  "author": {
+    "name": "Saizul Amin",
+    "url": "https://github.com/saizul"
+  },
+  "homepage": "https://github.com/saizul/accessibility-a11y-skills",
+  "repository": "https://github.com/saizul/accessibility-a11y-skills",
+  "license": "MIT",
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "wcag",
+    "wcag-2.2",
+    "aria",
+    "screen-reader",
+    "color-contrast",
+    "keyboard-navigation",
+    "accessible-forms",
+    "accessibility-statement"
+  ]
+}
