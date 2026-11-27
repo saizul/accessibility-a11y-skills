@@ -6,6 +6,12 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `accessible-forms`: `forms_check.py` rule `form.reset_button` (low, WCAG 3.3.4) for visible,
+  enabled `<button type="reset">` and `<input type="reset">` in forms with fields; one
+  mis-click next to Submit clears everything the user typed.
+
 ## [0.1.0] - 2026-11-26
 
 ### Added

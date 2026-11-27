@@ -135,3 +135,60 @@ def test_cli_files():
     assert run_script(SKILL, SCRIPT, str(HTML / "good_page.html")).returncode == 0
     assert run_script(SKILL, SCRIPT).returncode == 2
     assert run_script(SKILL, SCRIPT, "/no/such.html").returncode == 2
+
+
+FIELD = '<label for="n">Name</label><input id="n" name="n" autocomplete="name">'
+
+
+@pytest.mark.parametrize(
+    "control",
+    [
+        '<button type="reset">Clear</button>',
+        '<button type="RESET">Clear</button>',
+        '<input type="reset" value="Clear">',
+    ],
+)
+def test_reset_button_is_flagged(control):
+    found = [
+        f
+        for f in m.check(page(f"<form>{FIELD}{control}<button>Send</button></form>"))
+        if f["rule"] == "form.reset_button"
+    ]
+    assert len(found) == 1
+    assert found[0]["severity"] == "low"
+    assert found[0]["wcag"] == "3.3.4"
+    assert found[0]["element"].startswith(("button", "input"))
+
+
+@pytest.mark.parametrize(
+    "control",
+    [
+        '<button type="reset" hidden>Clear</button>',
+        '<button type="reset" disabled>Clear</button>',
+        '<input type="reset" style="display:none">',
+        '<button type="button">Clear</button>',
+    ],
+)
+def test_hidden_disabled_or_plain_buttons_are_not_reset_findings(control):
+    found = rules(m.check(page(f"<form>{FIELD}{control}<button>Send</button></form>")))
+    assert "form.reset_button" not in found
+
+
+def test_reset_button_in_form_without_fields_is_ignored():
+    found = rules(m.check(page('<form><button type="reset">Clear</button><button>Go</button></form>')))
+    assert "form.reset_button" not in found
+
+
+def test_reset_button_counted_once_per_form_and_ignorable(tmp_path):
+    html = tmp_path / "f.html"
+    html.write_text(
+        page(f'<form>{FIELD}<button type="reset">A</button><input type="reset"><button>Go</button></form>'),
+        encoding="utf-8",
+    )
+    res = run_script(SKILL, SCRIPT, str(html), "--json", "--fail-on", "low")
+    data = json.loads(res.stdout)
+    resets = [f for f in data["files"][0]["findings"] if f["rule"] == "form.reset_button"]
+    assert len(resets) == 1 and "2 reset" in resets[0]["message"]
+    assert res.returncode == 1
+    res = run_script(SKILL, SCRIPT, str(html), "--fail-on", "low", "--ignore", "form.reset_button")
+    assert res.returncode == 0, res.stdout

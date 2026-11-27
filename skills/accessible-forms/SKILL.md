@@ -61,6 +61,7 @@ Paths below are relative to this skill's folder (in Claude Code: `${CLAUDE_SKILL
 6. **Authentication and multi-step (3.3.7, 3.3.8).** Allow paste and password managers,
    offer passkeys or email links instead of puzzles, show "Same as billing address",
    never ask again for information already given in the same process.
+   Remove reset buttons (`form.reset_button`): one mis-click next to Submit wipes the form.
 7. **Re-run** the script on both states and do a keyboard plus screen reader submit
    (`screen-reader-testing`): fill wrongly, submit, hear the errors, fix, submit.
 
