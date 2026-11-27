@@ -7,7 +7,8 @@ home/work/mobile, field name, webauthn); personal-data fields without autocomple
 does not match the token; missing labels and placeholder-as-label; aria-label that does
 not contain the visible label (2.5.3); radio/checkbox groups without fieldset/legend;
 aria-invalid without an associated error message; required shown only visually; paste
-blocking on inputs (3.3.8); CAPTCHAs; forms without a submit button.
+blocking on inputs (3.3.8); CAPTCHAs; forms without a submit button; reset buttons
+that clear every field in one click.
 
 Exit codes: 0 = ok, 1 = findings at or above --fail-on (or an invalid --token), 2 = error.
 """
@@ -645,6 +646,25 @@ def check(text: str) -> list[dict]:
                     "3.2.2",
                 )
             )
+        resets = [
+            x
+            for x in inner
+            if x.tag in ("button", "input")
+            and (x.get("type") or "").strip().lower() == "reset"
+            and not is_hidden(x)
+            and not x.has("disabled")
+        ]
+        if resets and fields:
+            out.append(
+                finding(
+                    "low",
+                    "form.reset_button",
+                    resets[0],
+                    f"form has {len(resets)} reset button(s) that clear every field in one click",
+                    "remove the reset button; if users need to start over, confirm first or offer undo",
+                    "3.3.4",
+                )
+            )
         if any("captcha" in (x.get("class") or "").lower() or "captcha" in (x.get("src") or "").lower() for x in inner):
             out.append(
                 finding(
@@ -663,7 +683,7 @@ def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         description="Check HTML forms: autocomplete token validity and missing autocomplete on personal-data fields "
         "(1.3.5), labels, label-in-name, radio/checkbox fieldsets, error association, required state, paste "
-        "blocking (3.3.8), forms without submit.",
+        "blocking (3.3.8), forms without submit, reset buttons.",
         epilog="Exit codes: 0 = no findings at/above --fail-on, 1 = findings, 2 = error. "
         "--token VALUE validates one autocomplete value and exits.",
     )
